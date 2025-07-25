@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Educational Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f2ff 0%, #f5f7fa 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .intro-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: -50px auto 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .intro-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.25);
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 1px solid #e8f2ff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4a90e2, #357abd);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-color: #4a90e2;
+        }
+
+        .resource-card h3 {
+            color: #4a90e2;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: #e8f2ff;
+            color: #4a90e2;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .resource-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #4a90e2;
+            border: 2px solid #4a90e2;
+        }
+
+        .btn-secondary:hover {
+            background: #4a90e2;
+            color: white;
+        }
+
+
+
+        .category-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            color: #666;
+            border: 2px solid #e8f2ff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #4a90e2;
+            color: white;
+            border-color: #4a90e2;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .header p {
+                font-size: 1.1rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Education Pathway National Center (EPNC)</h1>
+        <p>Currated library of resources for the EPNC</p>
+    </div>
+
+    <div class="container">
+        <div class="intro-card">
+            <p>Welcome to our comprehensive collection of resources for EPNC</p>
+        </div>
+
+<div class="section">
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>Dashboards</h3>
+                     <div class="resource-actions">
+                        <a href="https://jjirik77.github.io/EPNC/dashboard.html" class="btn btn-primary">Impact Report</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<!-- Commented out
+        
+        <div class="section">
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <h3>LLM Interfaces</h3>
+                     <div class="resource-actions">
+                        <a href="https://jjirik77.github.io/AI_Resources/Comparative_Analysis.html" class="btn btn-primary">Comparative Analysis</a>
+                    </div>
+                    <p></p>
+                    <p>LLM interactive interfaces</p>
+                    <div class="resource-actions">
+                        <a href="https://jjirik77.github.io/AI_Resources/Perplexity_AI.html" class="btn btn-primary">Perplexity</a>
+                        <a href="https://jjirik77.github.io/AI_Resources/Gemini_AI.html" class="btn btn-primary">Gemini</a>
+                        <a href="https://jjirik77.github.io/AI_Resources/ChatGPT_AI.html" class="btn btn-primary">ChatGPT</a>
+                        <a href="https://jjirik77.github.io/AI_Resources/Claude_AI.html" class="btn btn-primary">Claude</a>
+                        <a href="https://jjirik77.github.io/AI_Resources/Copilot_AI.html" class="btn btn-primary">Copilot</a>
+                        <a href="https://jjirik77.github.io/AI_Resources/Deepseek_AI.html" class="btn btn-primary">DeepSeek</a>
+                        <a href="https://jjirik77.github.io/AI_Resources/Grok_AI.html" class="btn btn-primary">Grok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+-->
+      
+    <script>
+        // Simple filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const resourceCards = document.querySelectorAll('.resource-card');
+            
+            resourceCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Add ripple effect
+                    const ripple = document.createElement('div');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(74, 144, 226, 0.3)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.left = '50%';
+                    ripple.style.top = '50%';
+                    ripple.style.width = '20px';
+                    ripple.style.height = '20px';
+                    ripple.style.marginLeft = '-10px';
+                    ripple.style.marginTop = '-10px';
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
