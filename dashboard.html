@@ -104,7 +104,24 @@
             padding: 1.5rem;
             border: 1px solid #e2e8f0;
             height: 100%;
+            cursor: pointer;
         }
+        .lesson-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, margin-top 0.5s ease-in-out;
+        }
+        .lesson-card.open .lesson-content {
+            max-height: 200px; /* Adjust as needed */
+            margin-top: 0.75rem;
+        }
+        .lesson-card .click-prompt {
+            transition: opacity 0.3s ease;
+        }
+        .lesson-card.open .click-prompt {
+            opacity: 0;
+        }
+
     </style>
 </head>
 <body class="text-slate-800">
@@ -115,6 +132,32 @@
             <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">EPNC National Impact Dashboard</h1>
             <p class="mt-3 text-lg text-slate-600">Visualizing Our Growth and Reach (2022-2024)</p>
         </header>
+
+        <!-- Purpose and Scope Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="card p-8 rounded-2xl">
+                <div class="flex items-center mb-4">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-slate-800">Our Purpose</h2>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                   To build a sustainable, inclusive pipeline of cybersecurity talent by creating robust pathways that link high school programs directly to National Centers of Academic Excellence (NCAE-C).
+                </p>
+            </div>
+            <div class="card p-8 rounded-2xl">
+                <div class="flex items-center mb-4">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 9a9 9 0 019-9" />
+                    </svg>
+                    <h2 class="text-2xl font-bold text-slate-800">Our Scope</h2>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                   We deliver an integrated strategy blending open-source curriculum, comprehensive faculty development, and a state-of-the-art national virtual cyber range to empower educators and students nationwide.
+                </p>
+            </div>
+        </div>
 
         <!-- KPI Section -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
@@ -176,7 +219,7 @@
             <div id="tabs-content" class="pt-8">
                 <!-- Tab 1: Curriculum & Learning -->
                 <div id="tab-1-content" class="tab-content active">
-                     <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8">Our open-source curriculum, interactive modules, and virtual labs deliver rigorous, standards-aligned instruction to a rapidly growing number of schools and students.</p>
+                     <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">The foundation of our impact is a flexible, open-source curriculum aligned with NCAE-C standards. This is enhanced by a rich library of gamified, interactive modules that personalize learning and boost engagement. Our national virtual learning environment provides scalable, cloud-based labs, eliminating barriers and ensuring every student has access to hands-on, real-world cybersecurity scenarios.</p>
                      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
                         <div class="bg-blue-50 p-6 rounded-xl">
                             <p class="text-4xl font-extrabold text-blue-600 pillar-counter" data-target="1300">0</p>
@@ -202,6 +245,7 @@
                 </div>
                 <!-- Tab 2: Educator Impact -->
                 <div id="tab-2-content" class="tab-content">
+                    <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">We empower the people who guide students. Our comprehensive professional development has equipped over 3,500 educators with skills in everything from network defense to ethical hacking, delivered through flexible in-person and online formats. We also strategically engage career counselors and advisors, providing them with the toolkits and knowledge to confidently guide students into cybersecurity careers.</p>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
                         <div>
                             <h3 class="text-2xl font-bold mb-4 text-slate-900">Empowering Educators & Advisors</h3>
@@ -233,7 +277,7 @@
                 </div>
                 <!-- Tab 3: Collaboration & Reach -->
                 <div id="tab-3-content" class="tab-content">
-                    <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8">By focusing on state-level collaboration and outreach to rural/under-resourced schools, we are ensuring cybersecurity pathways are accessible to all.</p>
+                    <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">Our impact is amplified through a powerful network of state education agencies, local districts, and NCAE-C institutions. Through hundreds of stakeholder engagements and state summits, we foster cross-sector collaboration to build sustainable pathways. A core focus on equity ensures we are increasing participation in rural and under-resourced communities, making high-tech career pipelines accessible to all students.</p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                          <div class="bg-gray-50 p-6 rounded-xl">
                             <h3 class="font-bold text-lg text-slate-800 mb-2">Rural Participation</h3>
@@ -249,7 +293,7 @@
                 </div>
                 <!-- Tab 4: Work-Based Learning -->
                  <div id="tab-4-content" class="tab-content">
-                    <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8">We translate classroom learning into real-world experience through internships, apprenticeships, and direct employer partnerships, accelerating workforce readiness.</p>
+                    <p class="text-center text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">We bridge the gap between education and employment by translating classroom learning into real-world experience. Through a growing network of strategic employer partners, we facilitate internships and apprenticeships that accelerate workforce readiness. These opportunities build direct pipelines into cybersecurity roles, exposing students to mission-oriented work and long-term career pathways.</p>
                      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                         <div class="bg-amber-50 p-6 rounded-xl">
                             <p class="text-4xl font-extrabold text-amber-600 pillar-counter" data-target="31">0</p>
@@ -270,31 +314,46 @@
                 </div>
                 <!-- Tab 5: Lessons Learned -->
                 <div id="tab-5-content" class="tab-content">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="lessons-grid">
                         <div class="lesson-card">
-                            <h3 class="font-bold text-xl text-green-600 mb-3">Lessons Learned</h3>
-                            <ul class="space-y-2 list-disc list-inside text-slate-600">
-                                <li>Flexibility is key for curriculum adoption.</li>
-                                <li>Early counselor engagement is highly effective.</li>
-                                <li>Gamified learning boosts student interest.</li>
-                            </ul>
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-xl text-green-600">Lessons Learned</h3>
+                                <span class="text-xs text-slate-400 click-prompt">Click to reveal</span>
+                            </div>
+                            <div class="lesson-content">
+                                <ol class="space-y-2 list-decimal list-inside text-slate-600">
+                                    <li>Flexibility is key for curriculum adoption.</li>
+                                    <li>Early counselor engagement is highly effective.</li>
+                                    <li>Gamified learning boosts student interest.</li>
+                                </ol>
+                            </div>
                         </div>
                         <div class="lesson-card">
-                            <h3 class="font-bold text-xl text-amber-600 mb-3">Challenges</h3>
-                            <ul class="space-y-2 list-disc list-inside text-slate-600">
-                                <li>Infrastructure disparities limit some districts.</li>
-                                <li>Sustaining momentum in an evolving landscape.</li>
-                                <li>Scaling industry partnerships is resource-intensive.</li>
-                            </ul>
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-xl text-amber-600">Challenges</h3>
+                                <span class="text-xs text-slate-400 click-prompt">Click to reveal</span>
+                            </div>
+                             <div class="lesson-content">
+                                <ol class="space-y-2 list-decimal list-inside text-slate-600">
+                                    <li>Infrastructure disparities limit some districts.</li>
+                                    <li>Sustaining momentum in an evolving landscape.</li>
+                                    <li>Scaling industry partnerships is resource-intensive.</li>
+                                </ol>
+                            </div>
                         </div>
                         <div class="lesson-card">
-                            <h3 class="font-bold text-xl text-blue-600 mb-3">Recommendations</h3>
-                            <ul class="space-y-2 list-disc list-inside text-slate-600">
-                                <li>Renew and extend funding for sustainability.</li>
-                                <li>Develop recognition programs for schools.</li>
-                                <li>Expand virtual lab access for engagement.</li>
-                                <li>Invest in industry onboarding for internships.</li>
-                            </ul>
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-xl text-blue-600">Recommendations</h3>
+                                <span class="text-xs text-slate-400 click-prompt">Click to reveal</span>
+                            </div>
+                            <div class="lesson-content">
+                                <ol class="space-y-2 list-decimal list-inside text-slate-600">
+                                    <li>Renew and extend funding for sustainability.</li>
+                                    <li>Develop recognition programs for schools.</li>
+                                    <li>Expand virtual lab access for engagement.</li>
+                                    <li>Invest in industry onboarding for internships.</li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -397,11 +456,23 @@
         });
 
         modalBackdrop.addEventListener('click', (e) => {
-            if (e.target === modalBackdrop) {
-                modalBackdrop.classList.remove('visible');
-                modalChartContainer.innerHTML = '';
+            if (e.target === modalBackdrop || e.target.closest('#modal-content')) {
+                // Allow clicking inside modal
+            } else {
+                 modalBackdrop.classList.remove('visible');
+                 modalChartContainer.innerHTML = '';
             }
         });
+        
+        // --- Close Modal on content click ---
+        document.getElementById('modal-content').addEventListener('click', (e) => {
+            e.stopPropagation(); // prevent backdrop click event from firing
+        });
+         modalBackdrop.addEventListener('click', () => {
+            modalBackdrop.classList.remove('visible');
+            modalChartContainer.innerHTML = '';
+        });
+
 
         const createBarChart = (data, color, container) => {
             container.innerHTML = '';
@@ -460,6 +531,23 @@
             if (tabContentElement.querySelector('#rural-chart')) createEquityChart('rural-chart', 54, 61, '#16a34a');
             if (tabContentElement.querySelector('#female-chart')) createEquityChart('female-chart', 28, 38, '#db2777');
         }
+
+        // --- Lessons Learned Card Interactivity ---
+        document.getElementById('lessons-grid').addEventListener('click', (e) => {
+            const clickedCard = e.target.closest('.lesson-card');
+            if (!clickedCard) return;
+
+            const allCards = document.querySelectorAll('#lessons-grid .lesson-card');
+            
+            allCards.forEach(card => {
+                if (card !== clickedCard) {
+                    card.classList.remove('open');
+                }
+            });
+
+            clickedCard.classList.toggle('open');
+        });
+
 
         // --- Pillar-Specific Chart Creation ---
         const createAdvisorChart = () => {
