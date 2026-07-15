@@ -1,339 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Educational Library</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI-Ready Educator | EPNC</title>
+<style>
+  :root {
+    /* EPNC palette: deep navy + teal, red pathway accent */
+    --navy: #16456f;
+    --navy-mid: #0f3355;
+    --navy-light: #1f6da0;
+    --teal: #1490bd;
+    --teal-light: #23a9d8;
+    --teal-pale: #e6f4fb;
+    --red: #9e2a2b;
+    --cream: #f1f5f9;
+    --text-primary: #0d2a44;
+    --text-secondary: #1f3f5e;
+    --text-muted: #52708c;
+    --white: #ffffff;
+    --border: #b7cadd;
+    --card-bg: #ffffff;
+    --body-bg: #eef3f8;
+    --section-alt: #e2eaf2;
+    --blue-pale: #e8f2fa;
+    --blue-pale-border: #bad6ec;
+  }
+  [data-theme="dark"] {
+    --cream: #06182a;
+    --text-primary: #e6eef7;
+    --text-secondary: #9bb4d0;
+    --text-muted: #6a83a4;
+    --card-bg: #0a2c46;
+    --body-bg: #06182a;
+    --section-alt: #0a2338;
+    --blue-pale: #0d2840;
+    --blue-pale-border: #204a6b;
+    --border: #1d405d;
+    --teal-pale: #08283a;
+  }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e8f2ff 0%, #f5f7fa 100%);
-            min-height: 100vh;
-            color: #333;
-        }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.65;
+    transition: background 0.3s, color 0.3s;
+  }
 
-        .header {
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem 2rem;
-            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.3);
-        }
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--card-bg);
+    border-bottom: 3px solid var(--teal);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 66px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+  .nav-title {
+    font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 1.1rem;
+    color: var(--text-primary); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.15;
+  }
+  .nav-title span { color: var(--teal); }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .theme-toggle {
+    background: transparent; border: 1px solid var(--teal); color: var(--teal);
+    padding: 0.3rem 0.75rem; border-radius: 20px; cursor: pointer;
+    font-size: 0.75rem; font-family: Arial, sans-serif; letter-spacing: 0.04em; transition: background 0.2s;
+  }
+  .theme-toggle:hover { background: var(--teal); color: #ffffff; }
 
-        .header h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
+  /* HERO */
+  .hero {
+    background: var(--blue-pale); position: relative; overflow: hidden;
+    padding: 4.5rem 2rem 3.75rem; text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(-55deg, transparent, transparent 40px, rgba(20,144,189,0.05) 40px, rgba(20,144,189,0.05) 41px);
+  }
+  .hero-logo {
+    display: block; width: auto; height: auto; max-width: 360px; max-height: 128px;
+    margin: 0 auto 1.75rem; position: relative;
+  }
+  [data-theme="dark"] .hero-logo { background: #fff; border-radius: 10px; padding: 16px 24px; }
+  .hero h1 {
+    font-family: Georgia, serif; font-size: clamp(2.1rem, 5vw, 3.4rem); font-weight: 700;
+    color: var(--text-primary); line-height: 1.15; max-width: 860px; margin: 0 auto 1rem; position: relative;
+  }
+  .hero h1 span { color: var(--teal); }
+  .hero-subtitle {
+    font-family: Arial, sans-serif; font-size: 1.05rem; color: var(--text-secondary);
+    max-width: 700px; margin: 0 auto 2rem; line-height: 1.7; position: relative;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem; background: var(--teal);
+    color: #ffffff; text-decoration: none; font-family: Arial, sans-serif; font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.85rem 2rem; border-radius: 2px; position: relative; transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: var(--teal-light); transform: translateY(-1px); }
 
-        .header p {
-            font-size: 1.3rem;
-            font-weight: 300;
-            opacity: 0.95;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--blue-pale); border-bottom: 3px solid var(--teal);
+    padding: 1rem 2rem; display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+  }
+  .stat-item {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 2rem;
+    border-right: 2px solid rgba(20,144,189,0.3);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Arial Narrow', Arial, sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--teal); line-height: 1; }
+  .stat-label { font-family: Arial, sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
+  /* SECTIONS */
+  .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-alt { background: var(--section-alt); }
+  .section-eyebrow { font-family: Arial, sans-serif; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.5rem; }
+  .section-title { font-family: Georgia, serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; line-height: 1.2; }
+  .section-desc { font-family: Arial, sans-serif; font-size: 0.95rem; color: var(--text-secondary); max-width: 680px; margin-bottom: 2.5rem; line-height: 1.7; }
+  .rule { width: 48px; height: 3px; background: var(--teal); margin: 0.75rem 0 1.5rem; }
 
-        .intro-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2.5rem;
-            margin: -50px auto 3rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.8);
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
+  /* RESOURCE SECTION SUBHEADINGS */
+  .resource-section-heading {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .resource-section-heading .rsh-icon { font-size: 1.4rem; line-height: 1; }
+  .resource-section-heading h3 {
+    font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 1.1rem;
+    color: var(--text-primary); letter-spacing: 0.08em; text-transform: uppercase;
+  }
 
-        .intro-card p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #555;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+  /* RESOURCE CARDS */
+  .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+  .resource-grid:last-child { margin-bottom: 0; }
+  .resource-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.35rem 1.4rem; display: flex; flex-direction: column; gap: 0.6rem;
+    transition: box-shadow 0.2s, transform 0.15s; position: relative; overflow: hidden;
+  }
+  .resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--teal); }
+  .resource-card.repo::before { background: var(--navy); }
+  .resource-card:hover { box-shadow: 0 6px 24px rgba(10,22,40,0.14); transform: translateY(-2px); }
+  .rc-type {
+    font-family: Arial, sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--border);
+    border-radius: 20px; padding: 0.15rem 0.6rem; width: fit-content;
+  }
+  .rc-icon-title { display: flex; align-items: center; gap: 0.55rem; }
+  .rc-icon { font-size: 1.35rem; line-height: 1; flex-shrink: 0; }
+  .rc-title { font-family: Georgia, serif; font-size: 1.02rem; font-weight: 700; color: var(--text-primary); line-height: 1.25; }
+  .rc-desc { font-family: Arial, sans-serif; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+  .rc-covers { font-family: Arial, sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+  .rc-covers strong { color: var(--teal); font-weight: 700; }
+  .resource-card .card-footer { border-top: 1px solid var(--border); padding-top: 0.7rem; margin-top: auto; }
+  .launch-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem; background: var(--teal);
+    color: var(--white); text-decoration: none; font-family: Arial, sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 0.55rem 1.1rem; border-radius: 2px; transition: background 0.2s;
+  }
+  .launch-btn:hover { background: var(--teal-light); }
+  .resource-card.repo .launch-btn { background: var(--navy); }
+  .resource-card.repo .launch-btn:hover { background: var(--navy-light); }
+  .launch-btn .arrow { font-size: 1rem; transition: transform 0.15s; }
+  .launch-btn:hover .arrow { transform: translateX(3px); }
 
-        .section {
-            margin-bottom: 3rem;
-        }
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 3rem; align-items: start; }
+  .about-text h3 { font-family: Georgia, serif; font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+  .about-text p { font-family: Arial, sans-serif; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+  .about-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .fact-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 1rem; text-align: center; }
+  .fact-val { font-family: 'Arial Narrow', Arial, sans-serif; font-size: 1.4rem; font-weight: 900; color: var(--teal); display: block; line-height: 1.05; margin-bottom: 0.25rem; }
+  .fact-key { font-family: Arial, sans-serif; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
 
-        .section-header {
-            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
-            color: white;
-            padding: 1.5rem 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.25);
-        }
+  /* FOOTER */
+  footer { background: var(--blue-pale); border-top: 3px solid var(--teal); padding: 2.5rem 2rem; text-align: center; }
+  .footer-title { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 1.25rem; color: var(--teal); letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+  .footer-disclaimer { font-family: Arial, sans-serif; font-size: 0.75rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 1.25rem; line-height: 1.6; }
+  .footer-link {
+    display: inline-flex; align-items: center; gap: 0.4rem; background: var(--teal); color: #fff;
+    text-decoration: none; font-family: Arial, sans-serif; font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.07em; text-transform: uppercase; padding: 0.55rem 1.3rem; border-radius: 2px;
+    margin-bottom: 1.5rem; transition: background 0.2s;
+  }
+  .footer-link:hover { background: var(--teal-light); }
+  .footer-meta { font-family: Arial, sans-serif; font-size: 0.72rem; color: var(--text-muted); display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .footer-meta span { display: flex; align-items: center; gap: 0.4rem; }
 
-        .section-header h2 {
-            font-size: 2.2rem;
-            font-weight: 600;
-        }
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .resource-grid { grid-template-columns: 1fr; }
+    .stat-item { padding: 0.5rem 1rem; }
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    .section { padding: 2.5rem 1.25rem; }
+    .about-facts { grid-template-columns: 1fr 1fr; }
+  }
 
-        .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .resource-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-            border: 1px solid #e8f2ff;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .resource-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #4a90e2, #357abd);
-        }
-
-        .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-            border-color: #4a90e2;
-        }
-
-        .resource-card h3 {
-            color: #4a90e2;
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .resource-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .resource-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            background: #e8f2ff;
-            color: #4a90e2;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .resource-actions {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.7rem 1.5rem;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4a90e2, #357abd);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: #4a90e2;
-            border: 2px solid #4a90e2;
-        }
-
-        .btn-secondary:hover {
-            background: #4a90e2;
-            color: white;
-        }
-
-
-
-        .category-filter {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 0.8rem 1.5rem;
-            background: white;
-            color: #666;
-            border: 2px solid #e8f2ff;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: #4a90e2;
-            color: white;
-            border-color: #4a90e2;
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            
-            .header p {
-                font-size: 1.1rem;
-            }
-            
-            .container {
-                padding: 1rem;
-            }
-            
-            .resources-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .category-filter {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-    </style>
+  @media print {
+    body { background: white; color: #000; }
+    nav, .hero-cta, .launch-btn, .theme-toggle { display: none; }
+    .resource-card { break-inside: avoid; border: 1px solid #ccc; }
+  }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>Education Pathway National Center (EPNC)</h1>
-        <p>Currated library of resources for the EPNC</p>
+
+<!-- NAV -->
+<nav>
+  <a href="#top" class="nav-brand">
+    <span class="nav-title">The <span>AI-Ready</span> Educator</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#guides">Guides &amp; Tools</a></li>
+      <li><a href="#repositories">Repositories</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9790; Dark</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top" aria-label="Introduction">
+  <img src="epnc-logo.png" alt="EPNC — Education Pathway National Center" class="hero-logo">
+  <h1>Become an <span>AI-Ready</span> Educator</h1>
+  <p class="hero-subtitle">
+    A curated hub of interactive guides, classroom-ready tools, and faculty-built repositories to help you teach with&mdash;and about&mdash;artificial intelligence, responsibly and with confidence.
+  </p>
+  <a href="#guides" class="hero-cta">Explore the Resources &#9660;</a>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" role="complementary" aria-label="Resource statistics">
+  <div class="stat-item"><div><div class="stat-num">7</div><div class="stat-label">Curated Resources</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">3</div><div class="stat-label">Interactive Guides</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">4</div><div class="stat-label">Faculty Repositories</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">100%</div><div class="stat-label">Free &amp; Open</div></div></div>
+</div>
+
+<!-- INTERACTIVE GUIDES & TOOLS -->
+<section id="guides" aria-labelledby="guides-heading">
+  <div class="section">
+    <p class="section-eyebrow">Professional Development</p>
+    <h2 class="section-title" id="guides-heading">Interactive Guides &amp; Tools</h2>
+    <div class="rule"></div>
+    <p class="section-desc">Self-paced, interactive resources that build AI literacy and give you practical, ready-to-adapt strategies for the classroom&mdash;from redesigning assessments to understanding the newest agentic AI tools.</p>
+
+    <div class="resource-grid">
+
+      <article class="resource-card">
+        <span class="rc-type">Guide &amp; Toolkit</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#128737;&#65039;</span>
+          <div class="rc-title">AI-Resistant Assignments</div>
+        </div>
+        <p class="rc-desc">Strategies and ready-to-adapt assignment designs that stay rigorous and authentic in the age of generative AI. Rework assessments so they measure genuine student thinking rather than prompt-and-paste output.</p>
+        <p class="rc-covers"><strong>Focus:</strong> Assessment Design &middot; Academic Integrity &middot; Authentic Tasks &middot; Rubrics</p>
+        <div class="card-footer">
+          <a href="https://jjirik77.github.io/ai_resistant/cyad.html" target="_blank" rel="noopener" class="launch-btn">Open Resource <span class="arrow">&#8594;</span></a>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <span class="rc-type">Interactive Primer</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#129302;</span>
+          <div class="rc-title">AI Bots, Agents &amp; Agentic Browsers</div>
+        </div>
+        <p class="rc-desc">An interactive primer on the newest wave of AI&mdash;autonomous bots, tool-using agents, and agentic browsers that act on your behalf. Understand what they are, how they work, and where they fit in teaching and research.</p>
+        <p class="rc-covers"><strong>Focus:</strong> AI Agents &middot; Automation &middot; Agentic Browsing &middot; Emerging Tools</p>
+        <div class="card-footer">
+          <a href="https://jjirik77.github.io/agent_ai/" target="_blank" rel="noopener" class="launch-btn">Open Resource <span class="arrow">&#8594;</span></a>
+        </div>
+      </article>
+
+      <article class="resource-card">
+        <span class="rc-type">Course &amp; Guide</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#127891;</span>
+          <div class="rc-title">AI for Educators</div>
+        </div>
+        <p class="rc-desc">A practical, classroom-focused introduction to using AI as an educator&mdash;prompting techniques, lesson and content support, and responsible integration across teaching, learning, and administrative work.</p>
+        <p class="rc-covers"><strong>Focus:</strong> Prompting &middot; Lesson Support &middot; Responsible Use &middot; AI Literacy</p>
+        <div class="card-footer">
+          <a href="https://jjirik77.github.io/ai_ncyte.html/" target="_blank" rel="noopener" class="launch-btn">Open Resource <span class="arrow">&#8594;</span></a>
+        </div>
+      </article>
+
     </div>
+  </div>
+</section>
 
-    <div class="container">
-        <div class="intro-card">
-            <p>Welcome to our comprehensive collection of resources for EPNC</p>
+<!-- AI RESOURCE REPOSITORIES -->
+<div class="section-alt" id="repositories">
+  <div class="section">
+    <p class="section-eyebrow">Faculty Collections</p>
+    <h2 class="section-title">AI Resource Repositories</h2>
+    <div class="rule"></div>
+    <p class="section-desc">Curated, continually updated libraries of AI tools, prompts, examples, and teaching resources assembled by faculty across the network. Browse each collection to discover what colleagues are using and sharing.</p>
+
+    <div class="resource-grid">
+
+      <article class="resource-card repo">
+        <span class="rc-type">Repository</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#128193;</span>
+          <div class="rc-title">AI Repository &mdash; John S.</div>
         </div>
-
-<div class="section">
-
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <h3>Dashboards</h3>
-                     <div class="resource-actions">
-                        <a href="https://jjirik77.github.io/EPNC/dashboard.html" class="btn btn-primary">Impact Report</a>
-                        <a href="https://jjirik77.github.io/EPNC/dashboard_all.html" class="btn btn-primary">Impact Report Comprehensive</a>
-                    </div>
-                </div>
-            </div>
+        <p class="rc-desc">A curated collection of AI tools, resources, and teaching examples compiled by Prof. John S. (Repository 1).</p>
+        <p class="rc-covers"><strong>Curated by:</strong> John S. &middot; ProfJS-AI</p>
+        <div class="card-footer">
+          <a href="https://tinyurl.com/ProfJS-AI" target="_blank" rel="noopener" class="launch-btn">Open Repository <span class="arrow">&#8594;</span></a>
         </div>
+      </article>
 
-
-<!-- Commented out
-        
-        <div class="section">
-
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <h3>LLM Interfaces</h3>
-                     <div class="resource-actions">
-                        <a href="https://jjirik77.github.io/AI_Resources/Comparative_Analysis.html" class="btn btn-primary">Comparative Analysis</a>
-                    </div>
-                    <p></p>
-                    <p>LLM interactive interfaces</p>
-                    <div class="resource-actions">
-                        <a href="https://jjirik77.github.io/AI_Resources/Perplexity_AI.html" class="btn btn-primary">Perplexity</a>
-                        <a href="https://jjirik77.github.io/AI_Resources/Gemini_AI.html" class="btn btn-primary">Gemini</a>
-                        <a href="https://jjirik77.github.io/AI_Resources/ChatGPT_AI.html" class="btn btn-primary">ChatGPT</a>
-                        <a href="https://jjirik77.github.io/AI_Resources/Claude_AI.html" class="btn btn-primary">Claude</a>
-                        <a href="https://jjirik77.github.io/AI_Resources/Copilot_AI.html" class="btn btn-primary">Copilot</a>
-                        <a href="https://jjirik77.github.io/AI_Resources/Deepseek_AI.html" class="btn btn-primary">DeepSeek</a>
-                        <a href="https://jjirik77.github.io/AI_Resources/Grok_AI.html" class="btn btn-primary">Grok</a>
-                    </div>
-                </div>
-            </div>
+      <article class="resource-card repo">
+        <span class="rc-type">Repository</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#128193;</span>
+          <div class="rc-title">AI Repository &mdash; Jiri J.</div>
         </div>
+        <p class="rc-desc">A curated collection of AI tools, resources, and teaching examples compiled by Prof. Jiri J.</p>
+        <p class="rc-covers"><strong>Curated by:</strong> Jiri J. &middot; ProfJJ-AI</p>
+        <div class="card-footer">
+          <a href="https://tinyurl.com/ProfJJ-AI" target="_blank" rel="noopener" class="launch-btn">Open Repository <span class="arrow">&#8594;</span></a>
+        </div>
+      </article>
+
+      <article class="resource-card repo">
+        <span class="rc-type">Repository</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#128193;</span>
+          <div class="rc-title">AI Repository &mdash; Mike Q.</div>
+        </div>
+        <p class="rc-desc">A curated collection of AI tools, resources, and teaching examples compiled by Prof. Mike Q.</p>
+        <p class="rc-covers"><strong>Curated by:</strong> Mike Q. &middot; ProfQ-AI</p>
+        <div class="card-footer">
+          <a href="https://tinyurl.com/ProfQ-AI" target="_blank" rel="noopener" class="launch-btn">Open Repository <span class="arrow">&#8594;</span></a>
+        </div>
+      </article>
+
+      <article class="resource-card repo">
+        <span class="rc-type">Repository</span>
+        <div class="rc-icon-title">
+          <span class="rc-icon">&#128193;</span>
+          <div class="rc-title">AI Repository &mdash; John (MVCC)</div>
+        </div>
+        <p class="rc-desc">A second curated collection of AI tools and teaching resources compiled by Prof. John, hosted on the MVCC site (Repository 2).</p>
+        <p class="rc-covers"><strong>Curated by:</strong> John &middot; MVCC</p>
+        <div class="card-footer">
+          <a href="https://sands-mvcc.github.io/MVCC/index.html" target="_blank" rel="noopener" class="launch-btn">Open Repository <span class="arrow">&#8594;</span></a>
+        </div>
+      </article>
+
     </div>
+  </div>
+</div>
 
+<!-- ABOUT -->
+<section id="about" aria-labelledby="about-heading">
+  <div class="section">
+    <p class="section-eyebrow">About This Hub</p>
+    <h2 class="section-title" id="about-heading">Built for Educators, by Educators</h2>
+    <div class="rule"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>Who this is for</h3>
+        <p>This resource hub is designed for faculty, instructional staff, and program leaders who want to teach effectively in an era of rapidly advancing artificial intelligence. Whether you are just beginning to explore AI or already integrating it into your courses, these resources meet you where you are.</p>
+        <h3>How to use it</h3>
+        <p>Start with the <a href="#guides" style="color:var(--teal);font-weight:700;text-decoration:none;">Interactive Guides &amp; Tools</a> to build foundational AI literacy and pick up classroom-ready strategies. Then browse the <a href="#repositories" style="color:var(--teal);font-weight:700;text-decoration:none;">Faculty Repositories</a> to see the specific tools, prompts, and examples your colleagues are using and sharing across the network.</p>
+      </div>
+      <div>
+        <p class="section-eyebrow" style="margin-bottom:1rem;">At a Glance</p>
+        <div class="about-facts">
+          <div class="fact-card"><span class="fact-val">7</span><span class="fact-key">Resources</span></div>
+          <div class="fact-card"><span class="fact-val">3</span><span class="fact-key">Guides &amp; Tools</span></div>
+          <div class="fact-card"><span class="fact-val">4</span><span class="fact-key">Repositories</span></div>
+          <div class="fact-card"><span class="fact-val">Free</span><span class="fact-key">Open Access</span></div>
+        </div>
+        <p style="font-family:Arial,sans-serif;font-size:0.78rem;color:var(--text-muted);line-height:1.6;margin-top:1rem;">
+          <strong style="color:var(--teal);">Tip:</strong> Resources open in a new tab so you can keep this hub open as your home base while you explore.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
--->
-      
-    <script>
-        // Simple filter functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const resourceCards = document.querySelectorAll('.resource-card');
-            
-            resourceCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    // Add ripple effect
-                    const ripple = document.createElement('div');
-                    ripple.style.position = 'absolute';
-                    ripple.style.borderRadius = '50%';
-                    ripple.style.background = 'rgba(74, 144, 226, 0.3)';
-                    ripple.style.transform = 'scale(0)';
-                    ripple.style.animation = 'ripple 0.6s linear';
-                    ripple.style.left = '50%';
-                    ripple.style.top = '50%';
-                    ripple.style.width = '20px';
-                    ripple.style.height = '20px';
-                    ripple.style.marginLeft = '-10px';
-                    ripple.style.marginTop = '-10px';
-                    
-                    this.appendChild(ripple);
-                    
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                });
-            });
-        });
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">The Education Pathway National Center</div>
+  <p class="footer-disclaimer">
+    <em>The AI-Ready Educator</em> is a professional development resource hub of the Education Pathway National Center (EPNC). External resources are provided for educational purposes; each is maintained by its respective author and reflects their own views. Links open in a new tab.
+  </p>
+  <a class="footer-link" href="https://caeepnc.org/" target="_blank" rel="noopener">Visit caeepnc.org &#8594;</a>
+  <div class="footer-meta">
+    <span>&#127891; For Educators</span>
+    <span>&#129504; AI Literacy</span>
+    <span>&#128218; Curated Resources</span>
+  </div>
+</footer>
 
-        // Add CSS for ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+<script>
+  const THEME_KEY = 'epnc-ai-theme';
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.querySelector('.theme-toggle').textContent = t === 'dark' ? '☀ Light' : '☾ Dark';
+  }
+  function toggleTheme() {
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = cur === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+  }
+  applyTheme(localStorage.getItem(THEME_KEY) || 'light');
+</script>
 </body>
 </html>
